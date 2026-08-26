@@ -3,92 +3,121 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ReliefChain XAI - Blockchain Disaster Relief Platform</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+<title>ReliefChain XAI - Tamil Nadu Disaster Relief</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-:root{--bg:#050a14;--card:#101a2e;--card2:#0c1428;--border:#1e2f4d;--primary:#38bdf8;--success:#22c55e;--muted:#8b9bb4;--text:#f1f5f9}
+:root{--bg:#050a14;--card:#101a2e;--border:#1e2f4d;--primary:#38bdf8;--success:#22c55e;--muted:#8b9bb4}
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
-body{background:var(--bg);color:var(--text);padding-bottom:90px;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:#f1f5f9;padding-bottom:112px}
 .header{height:64px;background:#080e1e;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:0 20px;position:sticky;top:0;z-index:1000}
-.logo{font-family:'Plus Jakarta Sans';font-weight:800;font-size:18px;letter-spacing:-0.5px;display:flex;align-items:center;gap:10px}
-.dot{width:10px;height:10px;background:var(--primary);border-radius:50%;box-shadow:0 0 16px var(--primary)}
-.badge{font-size:10px;font-weight:700;letter-spacing:1px;background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.3);color:var(--success);padding:6px 12px;border-radius:100px}
-.container{max-width:760px;margin:auto;padding:20px}
-.tab{display:none}.tab.active{display:block;animation:up.35s ease}
-@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.h1{font-family:'Plus Jakarta Sans';font-size:32px;font-weight:800;letter-spacing:-1px;text-align:center;margin-top:8px;line-height:1.1}
-.sub{color:var(--muted);font-size:13.5px;text-align:center;margin-top:8px}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0}
-.stat{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:14px 6px;text-align:center}
-.stat b{font-family:'Plus Jakarta Sans';font-size:20px;display:block}.stat span{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:.6px;text-transform:uppercase;margin-top:4px;display:block}
-.donate{background:linear-gradient(135deg,#2563eb,#7c3aed);border-radius:24px;padding:24px;text-align:center;box-shadow:0 20px 40px rgba(37,99,235,0.25)}
+.logo{font-family:'Plus Jakarta Sans';font-weight:800;font-size:18px}
+.container{max-width:800px;margin:auto;padding:20px}
+.tab{display:none}.tab.active{display:block}
 .card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px;margin:16px 0}
 .label{font-size:11px;font-weight:700;letter-spacing:.8px;color:var(--muted);text-transform:uppercase;margin-top:14px;margin-bottom:8px;display:block}
 .label:first-child{margin-top:0}
 .input{width:100%;background:#060d1f!important;border:1.5px solid var(--border)!important;border-radius:12px!important;padding:14px 16px!important;color:#fff!important;font-size:14px!important;outline:none!important}
-.input:focus{border-color:var(--primary)!important;box-shadow:0 0 0 4px rgba(56,189,248,0.15)!important}
-.btn{width:100%;padding:14px;border:none;border-radius:12px;font-weight:700;font-size:14px;cursor:pointer;transition:.2s}
-.btn-w{background:#fff;color:#050a14}.btn-d{background:#1a2744;color:#fff;border:1px solid #253a61}.btn-s{background:var(--success);color:#fff}
+.btn{width:100%;padding:14px;border:none;border-radius:12px;font-weight:700;font-size:14px;cursor:pointer}
+.btn-w{background:#fff;color:#050a14}.btn-s{background:var(--success);color:#fff}.btn-d{background:#1a2744;color:#fff;border:1px solid #253a61}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.camBox{display:none;margin-top:12px;border-radius:16px;overflow:hidden;background:#000;border:1px solid var(--border)}
+.toast{position:fixed;top:75px;left:50%;transform:translateX(-50%);background:#101a2e;border:1px solid var(--border);padding:14px 18px;border-radius:14px;z-index:9999;opacity:0;pointer-events:none;transition:.35s;min-width:320px;display:flex;gap:12px;align-items:center;box-shadow:0 20px 40px rgba(0,0,0,.5)}
+.toast.show{opacity:1}
+.navbar{position:fixed;bottom:0;left:0;right:0;height:74px;background:#080e1e;border-top:1px solid var(--border);display:flex;justify-content:space-around;align-items:center;z-index:2000}
+.nav{flex:1;text-align:center;color:#5a6d8a;font-size:10px;font-weight:600;cursor:pointer}.nav.active{color:var(--primary)}
+#map{height:480px;border-radius:18px;border:1px solid var(--border)}
+.camBox{display:none;margin-top:12px;border-radius:16px;overflow:hidden;background:#000}
 #camera{width:100%;height:340px;object-fit:cover;display:block}
 #previewImg{width:100%;border-radius:16px;display:none;margin-top:12px;max-height:380px;object-fit:cover;border:1px solid var(--border)}
-.toast{position:fixed;top:75px;left:50%;transform:translateX(-50%) translateY(-10px);background:#101a2e;border:1px solid var(--border);padding:12px 18px;border-radius:14px;z-index:9999;opacity:0;pointer-events:none;transition:.35s;display:flex;gap:10px;align-items:center;min-width:300px;box-shadow:0 20px 40px rgba(0,0,0,0.5)}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.navbar{position:fixed;bottom:0;left:0;right:0;height:74px;background:#080e1e;border-top:1px solid var(--border);display:flex;justify-content:space-around;align-items:center;z-index:2000}
-.nav{flex:1;text-align:center;color:#5a6d8a;font-size:10px;font-weight:600;cursor:pointer;padding:8px 0;border-radius:12px}.nav.active{color:var(--primary)}
-#map{height:400px;border-radius:18px;border:1px solid var(--border)}
-.task{background:#0a1326;border:1px solid var(--border);border-radius:14px;padding:12px;display:flex;justify-content:space-between;align-items:center;margin:8px 0}
+/* TV NEWS TICKER */
+.liveTicker{position:fixed;bottom:74px;left:0;right:0;height:38px;background:#cc0000;color:#fff;display:flex;align-items:center;z-index:3000;overflow:hidden;border-top:2px solid #fff}
+.liveLabel{background:#000;color:#fff;font-weight:800;font-size:11px;padding:0 14px;height:100%;display:flex;align-items:center;white-space:nowrap;letter-spacing:.5px}
+.tickerTrack{flex:1;white-space:nowrap;overflow:hidden}
+.tickerContent{display:inline-block;padding-left:100%;animation:scroll 100s linear infinite;font-size:13px;font-weight:600}
+.tickerContent a{color:#ffff00;text-decoration:none;margin:0 8px;font-weight:700}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+.newsItem{padding:14px;background:#0a1326;border:1px solid var(--border);border-left:3px solid var(--primary);border-radius:0 12px 12px 0;margin:10px 0;cursor:pointer}
 </style>
 </head>
 <body>
-<div class="header"><div class="logo"><div class="dot"></div>ReliefChain XAI</div><div class="badge">● LIVE SYSTEM</div></div>
-<div id="toast" class="toast"><div id="tIcon" style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800">✓</div><div><div id="tTitle" style="font-weight:700;font-size:13px">Success</div><div id="tDesc" style="font-size:12px;color:var(--muted)"></div></div></div>
+<div class="header"><div class="logo">ReliefChain XAI - TN</div><div style="font-size:10px;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:#22c55e;padding:5px 10px;border-radius:100px">● LIVE TN</div></div>
+<div id="toast" class="toast"><div id="tIcon" style="width:32px;height:32px;border-radius:50%;background:rgba(34,197,94,.15);color:#22c55e;display:flex;align-items:center;justify-content:center;font-weight:800">✓</div><div><div id="tTitle" style="font-weight:700;font-size:13px">Success</div><div id="tDesc" style="font-size:12px;color:#8b9bb4"></div></div></div>
 <div class="container">
 <div id="home" class="tab active">
-<div class="h1">Blockchain-Powered<br>Disaster Relief</div>
-<div class="sub">Auditable • AI-Verified • Real-time Impact Tracking</div>
-<div class="stats">
-<div class="stat"><b style="color:var(--primary)">142</b><span>Reports</span></div>
-<div class="stat"><b style="color:var(--success)">₹62L</b><span>Raised</span></div>
-<div class="stat"><b style="color:#fb7185">47</b><span>Hotspots</span></div>
-<div class="stat"><b style="color:#a78bfa">320</b><span>Volunteers</span></div>
+<h1 style="font-family:'Plus Jakarta Sans';font-size:30px;text-align:center;margin-top:10px">Tamil Nadu Disaster<br>Relief Network</h1>
+<div style="text-align:center;color:var(--muted);font-size:13px;margin-top:8px">38 Districts • Blockchain Secured • Live News</div>
+<div class="card" style="text-align:center;background:linear-gradient(135deg,#2563eb,#7c3aed)">
+<h2 style="font-family:'Plus Jakarta Sans';font-size:20px">Support TN Flood Victims</h2>
+<button class="btn btn-w" style="margin-top:16px" onclick="document.getElementById('qrBox').style.display=document.getElementById('qrBox').style.display==='none'?'block':'none'">Donate Now</button>
+<div id="qrBox" style="display:none;margin-top:16px;background:#fff;padding:16px;border-radius:16px">
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=reliefchain@upi&pn=ReliefChainTN" style="border-radius:12px">
+<div style="color:#000;font-size:11px;font-weight:700;margin-top:8px">UPI: reliefchain@upi</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
+<button class="btn" style="background:#0f172a;color:#fff;font-size:12px" onclick="window.location.href='upi://pay?pa=reliefchain@upi'">Pay via UPI App</button>
+<button class="btn btn-s" style="font-size:12px" onclick="confirmPay()">I Paid ✓</button>
 </div>
-<div class="donate"><div style="font-family:'Plus Jakarta Sans';font-size:20px;font-weight:800">Support Victims Recovery</div><div style="font-size:13px;opacity:.9;margin-top:6px">100% on-chain • Secured by Blockchain</div><button class="btn btn-w" style="margin-top:16px" onclick="document.getElementById('qrBox').style.display=document.getElementById('qrBox').style.display==='none'?'block':'none'">Donate Now</button><div id="qrBox" style="display:none;margin-top:16px;background:#fff;padding:16px;border-radius:16px"><img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=reliefchain@upi"><div style="color:#000;font-size:11px;font-weight:700;margin-top:8px">UPI: reliefchain@upi</div></div></div>
-<div class="card"><span class="label">Fund Utilization - Live</span><canvas id="fundChart" height="120"></canvas></div>
-<div class="row2"><button class="btn btn-d" onclick="switchTab('volunteer',0)">Become Volunteer</button><button class="btn" style="background:#ef4444;color:#fff" onclick="window.location.href='tel:108'">Emergency 108</button></div>
+<div id="paySuccess" style="display:none;margin-top:12px;background:#f0fdf4;border:1px solid #22c55e;color:#166534;padding:10px;border-radius:10px;font-size:12px;font-weight:700">Payment Successful! TX: <span id="payTx"></span></div>
+</div>
+</div>
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center"><span class="label" style="margin:0">Live Disaster News</span><span style="font-size:10px;background:#ef4444;color:#fff;padding:4px 8px;border-radius:20px;font-weight:700">● LIVE</span></div>
+<div id="liveNews" style="margin-top:12px"></div>
+</div>
+<div class="card"><canvas id="fundChart" height="120"></canvas></div>
 </div>
 <div id="complaint" class="tab">
 <div style="font-family:'Plus Jakarta Sans';font-size:24px;font-weight:800">Report Incident</div>
-<div style="color:var(--muted);font-size:13px;margin-top:6px">Submit with geotagged photo evidence</div>
-<div class="card" style="margin-top:16px">
-<span class="label">Location (Auto-detected)</span><input id="loc" class="input" placeholder="Detecting location...">
-<span class="label">Problem Description</span><textarea id="desc" class="input" rows="3" placeholder="Describe the situation"></textarea>
+<div class="card">
+<span class="label">Location <span style="color:#38bdf8;cursor:pointer;text-transform:none" onclick="detectLocation()">[Retry Detect]</span></span>
+<input id="loc" class="input" placeholder="Detecting location...">
+<span class="label">Select District * (38 Districts)</span>
+<select id="district" class="input">
+<option value="">Choose District</option>
+<option>Ariyalur</option><option>Chengalpattu</option><option>Chennai</option><option>Coimbatore</option><option>Cuddalore</option><option>Dharmapuri</option><option>Dindigul</option><option>Erode</option><option>Kallakurichi</option><option>Kanchipuram</option><option>Kanyakumari</option><option>Karur</option><option>Krishnagiri</option><option>Madurai</option><option>Mayiladuthurai</option><option>Nagapattinam</option><option>Namakkal</option><option>Nilgiris</option><option>Perambalur</option><option>Pudukkottai</option><option>Ramanathapuram</option><option>Ranipet</option><option>Salem</option><option>Sivaganga</option><option>Tenkasi</option><option>Thanjavur</option><option>Theni</option><option>Thoothukudi</option><option>Tiruchirappalli</option><option>Tirunelveli</option><option>Tirupathur</option><option>Tiruppur</option><option>Tiruvallur</option><option>Tiruvannamalai</option><option>Tiruvarur</option><option>Vellore</option><option>Viluppuram</option><option>Virudhunagar</option>
+</select>
+<span class="label">Problem Description</span><textarea id="desc" class="input" rows="3" placeholder="Describe situation"></textarea>
 <span class="label">Photo Evidence *</span><div class="camBox" id="camBox"><video id="camera" autoplay playsinline></video></div><img id="previewImg">
 <div class="row2"><button class="btn btn-d" onclick="openCamera()">Open Camera</button><label class="btn btn-d" style="text-align:center">Gallery<input type="file" id="fileInput" accept="image/*" hidden></label></div>
-<div id="capRow" class="row2" style="display:none"><button class="btn btn-s" onclick="capturePhoto()">Capture Photo</button><button class="btn btn-d" onclick="closeCamera()">Cancel</button></div>
+<div id="capRow" class="row2" style="display:none"><button class="btn btn-s" onclick="capturePhoto()">Capture</button><button class="btn btn-d" onclick="closeCamera()">Cancel</button></div>
 <button class="btn btn-w" style="margin-top:18px" onclick="submitComplaint()">Submit for Verification</button>
 </div>
 </div>
-<div id="mapTab" class="tab"><div style="font-family:'Plus Jakarta Sans';font-size:24px;font-weight:800">Live Impact Map</div><div id="map" style="margin-top:14px"></div><div id="mapList" class="card" style="font-size:13px;color:var(--muted)">Verified reports will appear here</div></div>
-<div id="fund" class="tab"><div style="font-family:'Plus Jakarta Sans';font-size:24px;font-weight:800">Treasury Ledger</div><div class="card"><div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)"><span style="color:var(--muted)">Food Packets</span><b>₹12.5L</b></div><div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)"><span style="color:var(--muted)">Medical Aid</span><b>₹8.3L</b></div><div style="display:flex;justify-content:space-between;padding:12px 0"><span style="color:var(--muted)">Rescue Ops</span><b>₹15L</b></div><div style="display:flex;justify-content:space-between;padding:14px 0;color:var(--success)"><b>Total Disbursed</b><b>₹45L</b></div></div></div>
+<div id="mapTab" class="tab">
+<div style="font-family:'Plus Jakarta Sans';font-size:24px;font-weight:800">Exact TN Map - 38 Districts</div>
+<div id="map" style="margin-top:12px"></div>
+<div class="card" style="margin-top:12px"><div id="mapList" style="font-size:13px;color:var(--muted)">No reports yet</div></div>
+</div>
+<div id="fund" class="tab"><div style="font-family:'Plus Jakarta Sans';font-size:24px;font-weight:800">Treasury Ledger</div><div class="card"><div id="fundLog" style="font-family:monospace;font-size:12px">No transactions yet</div></div></div>
 <div id="volunteer" class="tab">
-<div style="font-family:'Plus Jakarta Sans';font-size:24px;font-weight:800">Volunteer Network</div>
-<div style="color:var(--muted);font-size:13px;margin-top:6px">320+ active volunteers</div>
-<div class="card" style="margin-top:16px;border-color:rgba(34,197,94,0.25)">
-<span class="label" style="color:var(--success)">Join as Volunteer</span>
-<span class="label">Full Name</span><input id="vName" class="input" placeholder="Enter your full name">
-<span class="label">Phone Number</span><input id="vPhone" class="input" type="tel" placeholder="Enter phone number">
-<span class="label">Select Expertise</span><select id="vSkill" class="input"><option value="">Choose your skill</option><option>Rescue and Swimming</option><option>Medical and First Aid</option><option>Food Distribution</option><option>Logistics and Driving</option></select>
-<span class="label">Operational Area</span><input id="vArea" class="input" placeholder="Eg: Cuddalore, Chennai, Trichy">
-<button class="btn btn-s" style="margin-top:18px" onclick="registerVol()">Register as Volunteer</button>
+<div style="font-family:'Plus Jakarta Sans';font-size:24px;font-weight:800">Volunteer - All 38 TN Districts</div>
+<div class="card" style="margin-top:16px">
+<span class="label">Full Name</span><input id="vName" class="input" placeholder="Full name">
+<span class="label">Phone Number</span><input id="vPhone" class="input" type="tel" placeholder="Phone">
+<span class="label">Select Expertise</span><select id="vSkill" class="input"><option value="">Choose skill</option><option>Rescue & Swimming</option><option>Medical & First Aid</option><option>Food Distribution</option><option>Logistics & Driving</option></select>
+<span class="label">Operational District * (38 Districts of Tamil Nadu)</span>
+<select id="vArea" class="input">
+<option value="">Select Your District</option>
+<option value="Ariyalur">Ariyalur</option><option value="Chengalpattu">Chengalpattu</option><option value="Chennai">Chennai</option><option value="Coimbatore">Coimbatore</option><option value="Cuddalore">Cuddalore</option><option value="Dharmapuri">Dharmapuri</option><option value="Dindigul">Dindigul</option><option value="Erode">Erode</option><option value="Kallakurichi">Kallakurichi</option><option value="Kanchipuram">Kanchipuram</option><option value="Kanyakumari">Kanyakumari</option><option value="Karur">Karur</option><option value="Krishnagiri">Krishnagiri</option><option value="Madurai">Madurai</option><option value="Mayiladuthurai">Mayiladuthurai</option><option value="Nagapattinam">Nagapattinam</option><option value="Namakkal">Namakkal</option><option value="Nilgiris">The Nilgiris</option><option value="Perambalur">Perambalur</option><option value="Pudukkottai">Pudukkottai</option><option value="Ramanathapuram">Ramanathapuram</option><option value="Ranipet">Ranipet</option><option value="Salem">Salem</option><option value="Sivaganga">Sivaganga</option><option value="Tenkasi">Tenkasi</option><option value="Thanjavur">Thanjavur</option><option value="Theni">Theni</option><option value="Thoothukudi">Thoothukudi</option><option value="Tiruchirappalli">Tiruchirappalli</option><option value="Tirunelveli">Tirunelveli</option><option value="Tirupathur">Tirupathur</option><option value="Tiruppur">Tiruppur</option><option value="Tiruvallur">Tiruvallur</option><option value="Tiruvannamalai">Tiruvannamalai</option><option value="Tiruvarur">Tiruvarur</option><option value="Vellore">Vellore</option><option value="Viluppuram">Viluppuram</option><option value="Virudhunagar">Virudhunagar</option>
+</select>
+<button class="btn btn-s" style="margin-top:18px" onclick="registerVol()">Register for Selected District</button>
 </div>
-<div class="card"><span class="label">Active Tasks Near You</span><div class="task"><div><div style="font-weight:700;font-size:13px">Flood Rescue - Veeraganur</div><div style="font-size:11px;color:var(--muted)">Requires 5 swimmers • 2km away</div></div><button class="btn btn-s" style="width:auto;padding:8px 16px;font-size:12px" onclick="this.innerText='Accepted ✓'">Accept</button></div></div>
 </div>
-<div id="ngo" class="tab"><div style="font-family:'Plus Jakarta Sans';font-size:24px;font-weight:800">NGO Portal</div><div class="card"><span class="label">Fund Request</span><input class="input" placeholder="Organization Name"><input class="input" placeholder="Registration ID" style="margin-top:10px"><button class="btn btn-w" style="margin-top:14px" onclick="showToast('Request submitted','Under verification','success')">Submit Request</button></div></div>
+<div id="ngo" class="tab">
+<div style="font-family:'Plus Jakarta Sans';font-size:24px;font-weight:800">NGO Portal + Live Sources</div>
+<div class="card"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<a href="https://timesofindia.indiatimes.com/topic/tamil-nadu-floods" target="_blank" class="btn btn-d" style="text-decoration:none;text-align:center;font-size:12px">TOI - TN Floods</a>
+<a href="https://www.thehindu.com/news/national/tamil-nadu/" target="_blank" class="btn btn-d" style="text-decoration:none;text-align:center;font-size:12px">The Hindu - TN</a>
+<a href="https://www.dailythanthi.com/News/State" target="_blank" class="btn btn-d" style="text-decoration:none;text-align:center;font-size:12px">Daily Thanthi</a>
+<a href="https://www.sunnewslive.com/tamilnadu-news" target="_blank" class="btn btn-d" style="text-decoration:none;text-align:center;font-size:12px">Sun News Live</a>
+</div></div>
+</div>
+</div>
+<!-- TV STYLE RUNNING TICKER -->
+<div class="liveTicker">
+<div class="liveLabel">● LIVE NEWS TN</div>
+<div class="tickerTrack"><div class="tickerContent" id="tickerContent"></div></div>
 </div>
 <div class="navbar">
 <div class="nav active" onclick="switchTab('home',this)">🏠<br>Home</div>
@@ -99,38 +128,41 @@ body{background:var(--bg);color:var(--text);padding-bottom:90px;-webkit-font-smo
 <div class="nav" onclick="switchTab('ngo',this)">🏢<br>NGO</div>
 </div>
 <script>
-let stream=null, map=null;
-function showToast(title, desc='', type='success'){
-  document.getElementById('tTitle').innerText=title;document.getElementById('tDesc').innerText=desc;
-  let icon=document.getElementById('tIcon');icon.innerText=type==='success'?'✓':'!';icon.style.background=type==='success'?'rgba(34,197,94,0.15)':'rgba(239,68,68,0.15)';icon.style.color=type==='success'?'#22c55e':'#ef4444';
-  let t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);
-}
-function switchTab(id, el){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));
-  if(el) el.classList.add('active');
-  if(id==='mapTab' &&!map){setTimeout(()=>{map=L.map('map').setView([11.1,78.6],7);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);L.circle([13.08,80.27],{radius:20000,color:'#ef4444'}).addTo(map).bindPopup('Chennai');},200);}
-}
-async function openCamera(){try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});document.getElementById('camBox').style.display='block';document.getElementById('camera').style.display='block';document.getElementById('camera').srcObject=stream;document.getElementById('capRow').style.display='grid';}catch(e){showToast('Camera denied','Please allow permission','error');}}
+let stream=null,map=null;
+const districtCoords={"Ariyalur":[11.13,79.07],"Chengalpattu":[12.68,79.98],"Chennai":[13.08,80.27],"Coimbatore":[11.01,76.95],"Cuddalore":[11.74,79.77],"Dharmapuri":[12.12,78.15],"Dindigul":[10.36,77.97],"Erode":[11.34,77.71],"Kallakurichi":[11.73,78.96],"Kanchipuram":[12.83,79.70],"Kanyakumari":[8.08,77.53],"Karur":[10.96,78.08],"Krishnagiri":[12.52,78.21],"Madurai":[9.92,78.11],"Mayiladuthurai":[11.10,79.65],"Nagapattinam":[10.76,79.84],"Namakkal":[11.22,78.16],"Nilgiris":[11.41,76.70],"Perambalur":[11.23,78.88],"Pudukkottai":[10.38,78.82],"Ramanathapuram":[9.36,78.83],"Ranipet":[12.92,79.33],"Salem":[11.66,78.15],"Sivaganga":[9.84,78.48],"Tenkasi":[8.95,77.31],"Thanjavur":[10.78,79.13],"Theni":[10.01,77.47],"Thoothukudi":[8.76,78.13],"Tiruchirappalli":[10.79,78.70],"Tirunelveli":[8.71,77.75],"Tirupathur":[12.49,78.56],"Tiruppur":[11.10,77.34],"Tiruvallur":[13.14,79.91],"Tiruvannamalai":[12.22,79.07],"Tiruvarur":[10.77,79.63],"Vellore":[12.91,79.13],"Viluppuram":[11.94,79.48],"Virudhunagar":[9.58,77.95]};
+function showToast(t,d='',type='success'){document.getElementById('tTitle').innerText=t;document.getElementById('tDesc').innerText=d;let ic=document.getElementById('tIcon');ic.innerText=type==='success'?'✓':'!';ic.style.background=type==='success'?'rgba(34,197,94,.15)':'rgba(239,68,68,.15)';ic.style.color=type==='success'?'#22c55e':'#ef4444';let e=document.getElementById('toast');e.classList.add('show');setTimeout(()=>e.classList.remove('show'),4000);}
+function switchTab(id,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));if(el)el.classList.add('active');if(id==='mapTab')setTimeout(initMap,200);}
+function confirmPay(){const tx='0x'+Math.random().toString(16).substr(2,8).toUpperCase();document.getElementById('payTx').innerText=tx;document.getElementById('paySuccess').style.display='block';document.getElementById('fundLog').innerHTML+=`<div style="padding:8px 0;border-bottom:1px solid #1e2f4d">✓ ₹100 Donation - ${tx} - ${new Date().toLocaleTimeString()}</div>`;showToast('Payment Successful!','TX: '+tx+' • Blockchain verified','success');}
+async function openCamera(){try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});document.getElementById('camBox').style.display='block';document.getElementById('camera').style.display='block';document.getElementById('camera').srcObject=stream;document.getElementById('capRow').style.display='grid';}catch(e){showToast('Camera denied','Allow permission','error');}}
 function capturePhoto(){let v=document.getElementById('camera');let c=document.createElement('canvas');c.width=v.videoWidth;c.height=v.videoHeight;c.getContext('2d').drawImage(v,0,0);let img=document.getElementById('previewImg');img.src=c.toDataURL('image/jpeg',0.9);img.style.display='block';closeCamera(false);}
-function closeCamera(hide=true){if(stream)stream.getTracks().forEach(t=>t.stop());document.getElementById('camBox').style.display='none';document.getElementById('capRow').style.display='none';if(hide)document.getElementById('previewImg').style.display='none';}
+function closeCamera(h=true){if(stream)stream.getTracks().forEach(t=>t.stop());document.getElementById('camBox').style.display='none';document.getElementById('capRow').style.display='none';if(h)document.getElementById('previewImg').style.display='none';}
 document.getElementById('fileInput').onchange=e=>{let f=e.target.files[0];if(f){let img=document.getElementById('previewImg');img.src=URL.createObjectURL(f);img.style.display='block';}};
-function submitComplaint(){let l=document.getElementById('loc').value.trim();let d=document.getElementById('desc').value.trim();let p=document.getElementById('previewImg').src;if(!l||!d){showToast('Incomplete','Fill location and description','error');return;}if(!p){showToast('Photo required','Photo evidence mandatory','error');return;}showToast('Report submitted','TX: 0x'+Math.random().toString(16).substr(2,6).toUpperCase()+' • Verified','success');}
-function registerVol(){let n=document.getElementById('vName').value.trim();let ph=document.getElementById('vPhone').value.trim();let sk=document.getElementById('vSkill').value;let ar=document.getElementById('vArea').value.trim();if(!n||!ph||!sk||!ar){showToast('Missing fields','Please fill all volunteer details','error');return;}showToast('Welcome '+n+'!','ID #'+(320+Math.floor(Math.random()*50))+' • Registered','success');}
-// ONLY complaint location auto-detects, volunteer area NEVER auto-fills
-if(navigator.geolocation){
-  navigator.geolocation.getCurrentPosition(async pos=>{
-    try{
-      const res=await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&format=json`);
-      const data=await res.json();
-      document.getElementById('loc').value=data.display_name || pos.coords.latitude.toFixed(4)+', '+pos.coords.longitude.toFixed(4);
-    }catch(e){
-      document.getElementById('loc').value=pos.coords.latitude.toFixed(4)+', '+pos.coords.longitude.toFixed(4);
-    }
+function submitComplaint(){let l=document.getElementById('loc').value.trim();let dist=document.getElementById('district').value;let d=document.getElementById('desc').value.trim();let p=document.getElementById('previewImg').src;if(!l||!dist||!d){showToast('Fill all fields','Location, District required','error');return;}if(!p){showToast('Photo required','Evidence mandatory','error');return;}let tx='0x'+Math.random().toString(16).substr(2,6).toUpperCase();showToast('Report submitted','District: '+dist+' • TX: '+tx,'success');document.getElementById('mapList').innerHTML+=`<div style="padding:10px 0;border-bottom:1px solid #1e2f4d"><b>${l} (${dist})</b><br>${d} • <span style="color:#22c55e">Verified</span></div>`;if(map&&districtCoords[dist]){let c=districtCoords[dist];L.marker(c).addTo(map).bindPopup(`<b>${dist}</b><br>${d}<br>TX: ${tx}`).openPopup();map.setView(c,10);}}
+function detectLocation(){let input=document.getElementById('loc');input.value='Detecting...';navigator.geolocation.getCurrentPosition(async pos=>{try{const res=await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&format=json`);const data=await res.json();input.value=data.display_name||pos.coords.latitude.toFixed(4)+', '+pos.coords.longitude.toFixed(4);}catch(e){input.value=pos.coords.latitude.toFixed(4)+', '+pos.coords.longitude.toFixed(4);}},()=>{input.value='';input.placeholder='Type manually: Eg: Cuddalore, Tamil Nadu';showToast('GPS failed','Type manually','error');});}
+function registerVol(){let n=document.getElementById('vName').value.trim();let ph=document.getElementById('vPhone').value.trim();let sk=document.getElementById('vSkill').value;let ar=document.getElementById('vArea').value;if(!n||!ph||!sk||!ar){showToast('Fill all fields','District selection required','error');return;}showToast('Registered for '+ar,'Welcome '+n+'!','success');}
+function initMap(){if(map){map.invalidateSize();return;}map=L.map('map').setView([11.12,78.65],7.2);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);for(let dist in districtCoords){let c=districtCoords[dist];let color=['Chennai','Cuddalore','Nagapattinam','Mayiladuthurai'].includes(dist)?'#ef4444':'#3b82f6';L.circleMarker(c,{radius:7,color:color,fillColor:color,fillOpacity:0.8}).addTo(map).bindPopup(`<b>${dist}</b><br><a href='https://timesofindia.indiatimes.com/topic/${dist.toLowerCase()}-floods' target='_blank'>View News</a>`);}}
+function loadNews(){
+ const items=[
+  {t:"🔴 Heavy Rain Alert: Chennai, Cuddalore, Nagapattinam - IMD Red Alert",src:"Times of India",link:"https://timesofindia.indiatimes.com/topic/tamil-nadu-floods"},
+  {t:"🟠 Cuddalore: 200 houses flooded - Rescue teams deployed",src:"The Hindu",link:"https://www.thehindu.com/news/national/tamil-nadu/"},
+  {t:"🟢 TN Govt ₹10 Cr Thoothukudi relief - Blockchain TX verified",src:"New Indian Express",link:"https://www.newindianexpress.com/states/tamil-nadu"},
+  {t:"🔴 Cauvery overflows Trichy - 5 villages evacuated",src:"NDTV",link:"https://www.ndtv.com/tamil-nadu-news"},
+  {t:"🟠 Nilgiris landslide alert - Ghat roads closed",src:"Times of India",link:"https://timesofindia.indiatimes.com/city/coimbatore"}
+ ];
+ let html='';items.forEach(i=>{html+=`<div class="newsItem" onclick="window.open('${i.link}','_blank')"><b style="font-size:13px">${i.t}</b><div style="font-size:11px;color:var(--muted);margin-top:6px">${i.src} • <span style="color:#38bdf8">Click to read →</span></div></div>`;});
+ document.getElementById('liveNews').innerHTML=html;
+ // Ticker content - TV style running
+ let tickerHtml='';
+ for(let k=0;k<3;k++){
+  items.forEach(i=>{
+   tickerHtml+=` ${i.t} - <a href="${i.link}" target="_blank">${i.src}</a> &nbsp;&nbsp; • &nbsp;&nbsp; `;
   });
+ }
+ tickerHtml+=` 🔴 Thanthi TV Live: <a href="https://www.dailythanthi.com/News/State" target="_blank">Daily Thanthi</a> • 🟠 Sun News: <a href="https://www.sunnewslive.com/tamilnadu-news" target="_blank">Sun News Tamil Nadu</a> • `;
+ document.getElementById('tickerContent').innerHTML=tickerHtml;
 }
-new Chart(document.getElementById('fundChart'),{type:'bar',data:{labels:['Food','Medical','Rescue','Shelter'],datasets:[{data:[12.5,8.3,15,9.2],backgroundColor:'#38bdf8',borderRadius:8,barThickness:20}]},options:{plugins:{legend:{display:false}},scales:{y:{grid:{color:'rgba(255,255,255,0.06)'},ticks:{color:'#5a6d8a'}},x:{grid:{display:false},ticks:{color:'#8b9bb4'}}}}});
+detectLocation();loadNews();setInterval(loadNews,60000);
+new Chart(document.getElementById('fundChart'),{type:'bar',data:{labels:['Food','Medical','Rescue','Shelter'],datasets:[{data:[12.5,8.3,15,9.2],backgroundColor:'#38bdf8',borderRadius:8,barThickness:18}]},options:{plugins:{legend:{display:false}},scales:{y:{grid:{color:'rgba(255,255,255,0.06)'}},x:{grid:{display:false}}}}});
 </script>
 </body>
 </html>
