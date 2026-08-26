@@ -40,7 +40,6 @@ body{background:var(--bg);color:#f1f5f9;padding-bottom:116px}
 @keyframes pulseFab{0%,100%{box-shadow:0 8px 24px rgba(239,68,68,.5)}50%{box-shadow:0 8px 32px rgba(239,68,68,.9);transform:scale(1.05)}}
 .newsItem{padding:14px;background:#0a1326;border:1px solid var(--border);border-left:3px solid var(--primary);border-radius:0 12px 12px 0;margin:10px 0;cursor:pointer}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(56,189,248,.7)}70%{box-shadow:0 0 0 10px rgba(56,189,248,0)}100%{box-shadow:0 0 0 0 rgba(56,189,248,0)}}
-.amtBtn{transition:.2s}
 </style>
 </head>
 <body>
@@ -84,7 +83,7 @@ body{background:var(--bg);color:#f1f5f9;padding-bottom:116px}
 <div id="complaint" class="tab">
 <div style="font-family:'Plus Jakarta Sans';font-size:24px;font-weight:800">Report Incident</div>
 <div class="card">
-<span class="label">Location * <span style="color:#22c55e;font-size:10px;background:rgba(34,197,94,.15);padding:3px 8px;border-radius:20px">AUTO HIGH ACCURACY</span> <span style="color:#38bdf8;cursor:pointer;text-transform:none;margin-left:8px" onclick="detectLocation()">↻ Retry Exact</span> <span style="color:#f97316;cursor:pointer;text-transform:none;margin-left:8px" onclick="useNamakkal()">📍 Use Namakkal</span></span>
+<span class="label">Location * <span style="color:#22c55e;font-size:10px;background:rgba(34,197,94,.15);padding:3px 8px;border-radius:20px">AUTO EXACT</span> <span style="color:#38bdf8;cursor:pointer;text-transform:none;margin-left:8px" onclick="detectLocation()">↻ Retry</span> <span style="color:#f97316;cursor:pointer;text-transform:none;margin-left:8px" onclick="useNamakkal()">📍 Use Namakkal</span></span>
 <input id="loc" class="input" placeholder="Detecting exact location...">
 <div style="font-size:11px;color:var(--muted);margin-top:6px" id="locStatus">Detecting GPS with High Accuracy...</div>
 <span class="label">Select District *</span>
@@ -102,53 +101,36 @@ body{background:var(--bg);color:#f1f5f9;padding-bottom:116px}
 
 <div id="mapTab" class="tab">
 <div style="font-family:'Plus Jakarta Sans';font-size:24px;font-weight:800">Exact TN Map - 38 Districts + Alerts</div>
-<div style="font-size:11px;color:var(--muted);margin-top:4px">🔴 Red Circle = High Alert Zone • Click marker for details</div>
+<div style="font-size:11px;color:var(--muted);margin-top:4px">🔴 Red Circle = High Alert Zone</div>
 <div id="map" style="margin-top:12px"></div>
 
-<!-- MAP KILEYE SMART ALLOCATION -->
-<div class="card" style="border:1px solid #ef4444">
-<div style="display:flex;justify-content:space-between;align-items:center">
-<span class="label" style="color:#ef4444;margin:0">🧠 3. Smart Resource Allocation (AI)</span>
-<span style="font-size:10px;background:#ef4444;color:#fff;padding:4px 8px;border-radius:20px">● AI ANALYZING</span>
+<div class="card" style="border:2px solid #ef4444;margin-top:16px">
+<div style="display:flex;justify-content:space-between;align-items:center"><span class="label" style="color:#ef4444;margin:0;font-size:12px">🧠 3. Smart Resource Allocation (AI)</span><span style="font-size:10px;background:#ef4444;color:#fff;padding:4px 8px;border-radius:20px">● AI ANALYZING</span></div>
+<div style="margin-top:14px;display:grid;gap:10px">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:rgba(239,68,68,.15);border:1px solid #ef4444;border-radius:12px"><div><div style="font-weight:800;color:#ef4444;font-size:14px">🔴 Area A → Chennai</div><div style="font-size:11px;color:var(--muted)">500 affected people • 5ft water • 200 reports</div><div style="margin-top:4px"><span style="background:#ef4444;color:#fff;padding:2px 8px;border-radius:10px;font-size:10px">HIGH PRIORITY</span></div></div><div style="text-align:right"><div style="font-size:24px;font-weight:800;color:#ef4444">80%</div><div style="font-size:10px;color:var(--muted)">Resources</div></div></div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:rgba(249,115,22,.15);border:1px solid #f97316;border-radius:12px"><div><div style="font-weight:800;color:#f97316;font-size:14px">🟡 Area B → Cuddalore</div><div style="font-size:11px;color:var(--muted)">200 affected people • 2ft water • 80 reports</div><div style="margin-top:4px"><span style="background:#f97316;color:#fff;padding:2px 8px;border-radius:10px;font-size:10px">MEDIUM</span></div></div><div style="text-align:right"><div style="font-size:24px;font-weight:800;color:#f97316">45%</div><div style="font-size:10px;color:var(--muted)">Resources</div></div></div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:rgba(34,197,94,.15);border:1px solid #22c55e;border-radius:12px"><div><div style="font-weight:800;color:#22c55e;font-size:14px">🟢 Area C → Namakkal</div><div style="font-size:11px;color:var(--muted)">50 affected people • Safe zone • 10 reports</div><div style="margin-top:4px"><span style="background:#22c55e;color:#fff;padding:2px 8px;border-radius:10px;font-size:10px">LOW</span></div></div><div style="text-align:right"><div style="font-size:24px;font-weight:800;color:#22c55e">15%</div><div style="font-size:10px;color:var(--muted)">Resources</div></div></div>
 </div>
-<div style="margin-top:14px;display:grid;gap:8px">
-<div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:rgba(239,68,68,.15);border:1px solid #ef4444;border-radius:12px">
-<div><div style="font-weight:800;color:#ef4444">🔴 Area A → Chennai</div><div style="font-size:11px;color:var(--muted)">500 affected • 5ft water • 200 reports</div><div style="font-size:10px;margin-top:4px"><span style="background:#ef4444;color:#fff;padding:2px 6px;border-radius:10px">HIGH PRIORITY</span></div></div>
-<div style="text-align:right"><div style="font-size:22px;font-weight:800;color:#ef4444">80%</div><div style="font-size:10px;color:var(--muted)">Resources</div></div>
-</div>
-<div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:rgba(249,115,22,.15);border:1px solid #f97316;border-radius:12px">
-<div><div style="font-weight:800;color:#f97316">🟡 Area B → Cuddalore</div><div style="font-size:11px;color:var(--muted)">200 affected • 2ft water • 80 reports</div><div style="font-size:10px;margin-top:4px"><span style="background:#f97316;color:#fff;padding:2px 6px;border-radius:10px">MEDIUM</span></div></div>
-<div style="text-align:right"><div style="font-size:22px;font-weight:800;color:#f97316">45%</div><div style="font-size:10px;color:var(--muted)">Resources</div></div>
-</div>
-<div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:rgba(34,197,94,.15);border:1px solid #22c55e;border-radius:12px">
-<div><div style="font-weight:800;color:#22c55e">🟢 Area C → Namakkal</div><div style="font-size:11px;color:var(--muted)">50 affected • Safe zone • 10 reports</div><div style="font-size:10px;margin-top:4px"><span style="background:#22c55e;color:#fff;padding:2px 6px;border-radius:10px">LOW</span></div></div>
-<div style="text-align:right"><div style="font-size:22px;font-weight:800;color:#22c55e">15%</div><div style="font-size:10px;color:var(--muted)">Resources</div></div>
-</div>
-</div>
-<div style="margin-top:10px;font-size:11px;color:var(--muted);text-align:center;background:#060d1f;padding:8px;border-radius:8px">AI Logic: <b style="color:#fff">Need அதிகம் → Priority அதிகம் → Resources அதிகம்</b></div>
+<div style="margin-top:12px;font-size:11px;color:var(--muted);text-align:center;background:#060d1f;padding:10px;border-radius:10px">AI Logic: <b style="color:#fff">Need அதிகம் → Priority அதிகம் → Resources அதிகம்</b><br>Area A la 500 per affected na 80% resource anga pogum</div>
 </div>
 
-<!-- MAP KILEYE REAL-TIME TRACKING -->
-<div class="card" style="border:1px solid #38bdf8">
-<div style="display:flex;justify-content:space-between;align-items:center">
-<span class="label" style="color:#38bdf8;margin:0">📍 4. Real-Time Tracking</span>
-<span style="font-size:10px;background:#38bdf8;color:#000;padding:4px 8px;border-radius:20px">● LIVE TRACKING</span>
-</div>
+<div class="card" style="border:2px solid #38bdf8">
+<div style="display:flex;justify-content:space-between;align-items:center"><span class="label" style="color:#38bdf8;margin:0;font-size:12px">📍 4. Real-Time Tracking</span><span style="font-size:10px;background:#38bdf8;color:#000;padding:4px 8px;border-radius:20px">● LIVE TRACKING</span></div>
 <div style="margin-top:6px;font-size:11px;color:var(--muted)">Relief materials distribute pannumbodhu tracking information maintain pannalam</div>
-<div style="margin-top:14px;position:relative;padding-left:24px;border-left:2px dashed var(--border)">
-<div style="position:relative;margin-bottom:18px"><div style="position:absolute;left:-31px;top:0;width:16px;height:16px;background:#22c55e;border-radius:50%;border:2px solid #fff"></div><div style="font-weight:700;font-size:13px">Food Packets - NGO → Collected ✓</div><div style="font-size:11px;color:var(--muted)">NGO: Cuddalore Rescue Team • 200 packets • 10:30 AM • TX: 0x8A2F...21B4</div></div>
-<div style="position:relative;margin-bottom:18px"><div style="position:absolute;left:-31px;top:0;width:16px;height:16px;background:#38bdf8;border-radius:50%;border:2px solid #fff;animation:pulse 1.5s infinite"></div><div style="font-weight:700;font-size:13px">Transport → Disaster Area (In Transit)</div><div style="font-size:11px;color:var(--muted)">Vehicle: TN-31-AB-1234 • Driver: Kumar • ETA: 25 min • Last: Mayiladuthurai 11:15 AM</div><div style="margin-top:6px;background:#060d1f;height:6px;border-radius:10px;overflow:hidden"><div style="width:65%;height:100%;background:#38bdf8"></div></div><div style="font-size:10px;color:#38bdf8;margin-top:4px">● Live: 65% completed</div></div>
-<div style="position:relative;margin-bottom:18px"><div style="position:absolute;left:-31px;top:0;width:16px;height:16px;background:#1f2937;border-radius:50%;border:2px solid var(--border)"></div><div style="font-weight:700;font-size:13px;color:var(--muted)">Victims → Delivered (Pending)</div><div style="font-size:11px;color:var(--muted)">Chennai Anna Nagar • 500 people waiting • Status: Waiting for transit</div></div>
+<div style="margin-top:16px;position:relative;padding-left:26px;border-left:2px dashed var(--border)">
+<div style="position:relative;margin-bottom:20px"><div style="position:absolute;left:-33px;top:0;width:18px;height:18px;background:#22c55e;border-radius:50%;border:2px solid #fff"></div><div style="font-weight:700;font-size:14px">Food Packets - NGO → Collected ✓</div><div style="font-size:11px;color:var(--muted)">NGO: Cuddalore Rescue Team • 200 packets • 10:30 AM</div><div style="font-size:10px;color:#22c55e;margin-top:3px">✓ Completed • TX: 0x8A2F...21B4 • Blockchain verified</div></div>
+<div style="position:relative;margin-bottom:20px"><div style="position:absolute;left:-33px;top:0;width:18px;height:18px;background:#38bdf8;border-radius:50%;border:2px solid #fff;animation:pulse 1.5s infinite"></div><div style="font-weight:700;font-size:14px">Transport → Disaster Area (In Transit) ●</div><div style="font-size:11px;color:var(--muted)">Vehicle: TN-31-AB-1234 • Driver: Kumar • ETA: 25 min • Last: Mayiladuthurai 11:15 AM</div><div style="margin-top:8px;background:#060d1f;height:8px;border-radius:10px;overflow:hidden"><div style="width:65%;height:100%;background:#38bdf8"></div></div><div style="font-size:10px;color:#38bdf8;margin-top:4px">● Live tracking - 65% completed</div></div>
+<div style="position:relative"><div style="position:absolute;left:-33px;top:0;width:18px;height:18px;background:#1f2937;border-radius:50%;border:2px solid var(--border)"></div><div style="font-weight:700;font-size:14px;color:var(--muted)">Victims → Delivered (Pending)</div><div style="font-size:11px;color:var(--muted)">Chennai Anna Nagar • 500 people waiting • Status: Waiting for transit completion</div><div style="font-size:10px;color:var(--muted);margin-top:3px">○ Waiting</div></div>
 </div>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px">
-<div style="background:#060d1f;padding:10px;border-radius:10px;text-align:center"><div style="font-size:11px;color:var(--muted)">Total Sent</div><div style="font-weight:800;font-size:16px">450</div></div>
-<div style="background:#060d1f;padding:10px;border-radius:10px;text-align:center"><div style="font-size:11px;color:var(--muted)">Delivered</div><div style="font-weight:800;font-size:16px;color:#22c55e">290 ✓</div></div>
-<div style="background:#060d1f;padding:10px;border-radius:10px;text-align:center"><div style="font-size:11px;color:var(--muted)">In Transit</div><div style="font-weight:800;font-size:16px;color:#38bdf8">160 ●</div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:16px">
+<div style="background:#060d1f;padding:12px;border-radius:10px;text-align:center"><div style="font-size:11px;color:var(--muted)">Total Sent</div><div style="font-weight:800;font-size:18px">450 Packets</div></div>
+<div style="background:#060d1f;padding:12px;border-radius:10px;text-align:center"><div style="font-size:11px;color:var(--muted)">Delivered</div><div style="font-weight:800;font-size:18px;color:#22c55e">290 ✓</div></div>
+<div style="background:#060d1f;padding:12px;border-radius:10px;text-align:center"><div style="font-size:11px;color:var(--muted)">In Transit</div><div style="font-weight:800;font-size:18px;color:#38bdf8">160 ●</div></div>
 </div>
-<div style="margin-top:10px;font-size:11px;color:var(--muted);text-align:center">Flow: <b style="color:#fff">NGO → Transport → Disaster Area → Victims</b> • Blockchain verified tracking</div>
+<div style="margin-top:12px;font-size:11px;text-align:center;color:var(--muted);background:#060d1f;padding:10px;border-radius:10px">Flow: <b style="color:#fff">NGO → Transport → Disaster Area → Victims</b><br>Resource enga irukku? Delivered aacha? Tracking la theriyum</div>
 </div>
 
-<div class="card" style="margin-top:12px"><div id="mapList" style="font-size:13px;color:var(--muted)">No reports yet - Submit report to see on map</div></div>
+<div class="card"><div id="mapList" style="font-size:13px;color:var(--muted)">No reports yet</div></div>
 </div>
 
 <div id="fund" class="tab"><div style="font-family:'Plus Jakarta Sans';font-size:24px;font-weight:800">Treasury Ledger - Blockchain</div><div style="color:var(--muted);font-size:12px;margin-top:6px">Donor name + TX hash + Public audit</div><div class="card"><div id="fundLog" style="font-family:monospace;font-size:12px">No transactions yet - Donate to see donor names here</div></div></div>
@@ -160,7 +142,10 @@ body{background:var(--bg);color:#f1f5f9;padding-bottom:116px}
 <span class="label">Phone Number</span><input id="vPhone" class="input" type="tel" placeholder="Phone">
 <span class="label">Select Expertise</span><select id="vSkill" class="input"><option value="">Choose skill</option><option>Rescue & Swimming</option><option>Medical & First Aid</option><option>Food Distribution</option><option>Logistics & Driving</option></select>
 <span class="label">Operational District * (38 Districts of Tamil Nadu)</span>
-<select id="vArea" class="input"><option value="">Select Your District</option><option>Ariyalur</option><option>Chengalpattu</option><option>Chennai</option><option>Coimbatore</option><option>Cuddalore</option><option>Dharmapuri</option><option>Dindigul</option><option>Erode</option><option>Kallakurichi</option><option>Kanchipuram</option><option>Kanyakumari</option><option>Karur</option><option>Krishnagiri</option><option>Madurai</option><option>Mayiladuthurai</option><option>Nagapattinam</option><option>Namakkal</option><option>Nilgiris</option><option>Perambalur</option><option>Pudukkottai</option><option>Ramanathapuram</option><option>Ranipet</option><option>Salem</option><option>Sivaganga</option><option>Tenkasi</option><option>Thanjavur</option><option>Theni</option><option>Thoothukudi</option><option>Tiruchirappalli</option><option>Tirunelveli</option><option>Tirupathur</option><option>Tiruppur</option><option>Tiruvallur</option><option>Tiruvannamalai</option><option>Tiruvarur</option><option>Vellore</option><option>Viluppuram</option><option>Virudhunagar</option></select>
+<select id="vArea" class="input">
+<option value="">Select Your District</option>
+<option>Ariyalur</option><option>Chengalpattu</option><option>Chennai</option><option>Coimbatore</option><option>Cuddalore</option><option>Dharmapuri</option><option>Dindigul</option><option>Erode</option><option>Kallakurichi</option><option>Kanchipuram</option><option>Kanyakumari</option><option>Karur</option><option>Krishnagiri</option><option>Madurai</option><option>Mayiladuthurai</option><option>Nagapattinam</option><option>Namakkal</option><option>Nilgiris</option><option>Perambalur</option><option>Pudukkottai</option><option>Ramanathapuram</option><option>Ranipet</option><option>Salem</option><option>Sivaganga</option><option>Tenkasi</option><option>Thanjavur</option><option>Theni</option><option>Thoothukudi</option><option>Tiruchirappalli</option><option>Tirunelveli</option><option>Tirupathur</option><option>Tiruppur</option><option>Tiruvallur</option><option>Tiruvannamalai</option><option>Tiruvarur</option><option>Vellore</option><option>Viluppuram</option><option>Virudhunagar</option>
+</select>
 <button class="btn btn-s" style="margin-top:18px" onclick="registerVol()">Register for Selected District</button>
 </div>
 </div>
@@ -190,7 +175,7 @@ body{background:var(--bg);color:#f1f5f9;padding-bottom:116px}
 <div style="padding:12px 0;display:flex;justify-content:space-between"><div><b style="font-size:13px">Namakkal Volunteers Network</b><br><span style="font-size:11px;color:var(--muted)">Namakkal • Trust • ₹5.2L disbursed</span></div><span style="background:rgba(34,197,94,.15);color:#22c55e;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700">Verified ✓</span></div>
 </div>
 <div class="card">
-<span class="label">Live News Sources</span>
+<span class="label">Live News Sources (External Links)</span>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
 <a href="https://timesofindia.indiatimes.com/topic/tamil-nadu-floods" target="_blank" class="btn btn-d" style="text-decoration:none;text-align:center;font-size:12px">TOI - TN Floods</a>
 <a href="https://www.thehindu.com/news/national/tamil-nadu/" target="_blank" class="btn btn-d" style="text-decoration:none;text-align:center;font-size:12px">The Hindu</a>
@@ -199,13 +184,9 @@ body{background:var(--bg);color:#f1f5f9;padding-bottom:116px}
 </div>
 </div>
 </div>
-
 </div>
 
-<div class="liveTicker">
-<div class="liveLabel">● LIVE NEWS TN</div>
-<div class="tickerTrack"><div class="tickerContent" id="tickerContent"></div></div>
-</div>
+<div class="liveTicker"><div class="liveLabel">● LIVE NEWS TN</div><div class="tickerTrack"><div class="tickerContent" id="tickerContent"></div></div></div>
 
 <div class="navbar">
 <div class="nav active" onclick="switchTab('home',this)">🏠<br>Home</div>
@@ -217,111 +198,33 @@ body{background:var(--bg);color:#f1f5f9;padding-bottom:116px}
 </div>
 
 <script>
-let stream=null,map=null;
-let selectedAmt=100;
+let stream=null,map=null,selectedAmt=100;
 const districtCoords={"Ariyalur":[11.13,79.07],"Chengalpattu":[12.68,79.98],"Chennai":[13.08,80.27],"Coimbatore":[11.01,76.95],"Cuddalore":[11.74,79.77],"Dharmapuri":[12.12,78.15],"Dindigul":[10.36,77.97],"Erode":[11.34,77.71],"Kallakurichi":[11.73,78.96],"Kanchipuram":[12.83,79.70],"Kanyakumari":[8.08,77.53],"Karur":[10.96,78.08],"Krishnagiri":[12.52,78.21],"Madurai":[9.92,78.11],"Mayiladuthurai":[11.10,79.65],"Nagapattinam":[10.76,79.84],"Namakkal":[11.22,78.16],"Nilgiris":[11.41,76.70],"Perambalur":[11.23,78.88],"Pudukkottai":[10.38,78.82],"Ramanathapuram":[9.36,78.83],"Ranipet":[12.92,79.33],"Salem":[11.66,78.15],"Sivaganga":[9.84,78.48],"Tenkasi":[8.95,77.31],"Thanjavur":[10.78,79.13],"Theni":[10.01,77.47],"Thoothukudi":[8.76,78.13],"Tiruchirappalli":[10.79,78.70],"Tirunelveli":[8.71,77.75],"Tirupathur":[12.49,78.56],"Tiruppur":[11.10,77.34],"Tiruvallur":[13.14,79.91],"Tiruvannamalai":[12.22,79.07],"Tiruvarur":[10.77,79.63],"Vellore":[12.91,79.13],"Viluppuram":[11.94,79.48],"Virudhunagar":[9.58,77.95]};
 function showToast(t,d='',type='success'){document.getElementById('tTitle').innerText=t;document.getElementById('tDesc').innerText=d;let ic=document.getElementById('tIcon');ic.innerText=type==='success'?'✓':'!';ic.style.background=type==='success'?'rgba(34,197,94,.15)':'rgba(239,68,68,.15)';ic.style.color=type==='success'?'#22c55e':'#ef4444';let e=document.getElementById('toast');e.classList.add('show');setTimeout(()=>e.classList.remove('show'),4000);}
 function switchTab(id,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));if(el)el.classList.add('active');if(id==='mapTab')setTimeout(initMap,200);}
 function setAmt(amt,btn){selectedAmt=amt;document.querySelectorAll('.amtBtn').forEach(b=>{b.style.background='#f1f5f9';b.style.color='#000';});btn.style.background='#0f172a';btn.style.color='#fff';document.getElementById('payInfo').innerText=`UPI: reliefchain@upi • ₹${amt}`;document.getElementById('qrImg').src=`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=reliefchain@upi&am=${amt}`;}
-function confirmPay(){
- let name=document.getElementById('donorName').value.trim();
- if(!name){showToast('Enter your name','Name required for blockchain ledger','error');return;}
- const tx='0x'+Math.random().toString(16).substr(2,8).toUpperCase();
- document.getElementById('payTx').innerText=tx;
- document.getElementById('paySuccess').style.display='block';
- document.getElementById('fundLog').innerHTML=`<div style="padding:10px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);border-radius:10px;margin:8px 0"><div style="color:#22c55e;font-weight:700">✓ ${name} donated ₹${selectedAmt}</div><div style="color:var(--muted);margin-top:4px;font-size:11px">TX: ${tx} • ${new Date().toLocaleTimeString()} • Verified on Blockchain ✓</div></div>` + document.getElementById('fundLog').innerHTML;
- showToast('Payment Successful! '+name,'₹'+selectedAmt+' • TX: '+tx,'success');
-}
+function confirmPay(){let name=document.getElementById('donorName').value.trim();if(!name){showToast('Enter your name','Name required','error');return;}const tx='0x'+Math.random().toString(16).substr(2,8).toUpperCase();document.getElementById('payTx').innerText=tx;document.getElementById('paySuccess').style.display='block';document.getElementById('fundLog').innerHTML=`<div style="padding:10px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);border-radius:10px;margin:8px 0"><div style="color:#22c55e;font-weight:700">✓ ${name} donated ₹${selectedAmt}</div><div style="color:var(--muted);margin-top:4px;font-size:11px">TX: ${tx} • ${new Date().toLocaleTimeString()} • Verified ✓</div></div>`+document.getElementById('fundLog').innerHTML;showToast('Payment Successful! '+name,'₹'+selectedAmt+' • TX: '+tx,'success');}
 async function openCamera(){try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});document.getElementById('camBox').style.display='block';document.getElementById('camera').style.display='block';document.getElementById('camera').srcObject=stream;document.getElementById('capRow').style.display='grid';}catch(e){showToast('Camera denied','Allow permission','error');}}
 function capturePhoto(){let v=document.getElementById('camera');let c=document.createElement('canvas');c.width=v.videoWidth;c.height=v.videoHeight;c.getContext('2d').drawImage(v,0,0);let img=document.getElementById('previewImg');img.src=c.toDataURL('image/jpeg',0.9);img.style.display='block';closeCamera(false);}
 function closeCamera(h=true){if(stream)stream.getTracks().forEach(t=>t.stop());document.getElementById('camBox').style.display='none';document.getElementById('capRow').style.display='none';if(h)document.getElementById('previewImg').style.display='none';}
 document.getElementById('fileInput').onchange=e=>{let f=e.target.files[0];if(f){let img=document.getElementById('previewImg');img.src=URL.createObjectURL(f);img.style.display='block';}};
-function submitComplaint(){let l=document.getElementById('loc').value.trim();let dist=document.getElementById('district').value;let d=document.getElementById('desc').value.trim();let p=document.getElementById('previewImg').src;if(!l||!dist||!d){showToast('Fill all fields','Location, District required','error');return;}if(!p){showToast('Photo required','Evidence mandatory','error');return;}let tx='0x'+Math.random().toString(16).substr(2,6).toUpperCase();showToast('Report submitted','District: '+dist+' • TX: '+tx,'success');document.getElementById('mapList').innerHTML+=`<div style="padding:10px 0;border-bottom:1px solid #1e2f4d"><b>${l} (${dist})</b><br>${d} • <span style="color:#22c55e">Verified • ${tx}</span></div>`;if(map&&districtCoords[dist]){let c=districtCoords[dist];L.marker(c).addTo(map).bindPopup(`<b>${dist}</b><br>${d}<br>TX: ${tx}`).openPopup();map.setView(c,10);}}
+function submitComplaint(){let l=document.getElementById('loc').value.trim();let dist=document.getElementById('district').value;let d=document.getElementById('desc').value.trim();let p=document.getElementById('previewImg').src;if(!l||!dist||!d){showToast('Fill all fields','Location, District required','error');return;}if(!p){showToast('Photo required','Evidence mandatory','error');return;}let tx='0x'+Math.random().toString(16).substr(2,6).toUpperCase();showToast('Report submitted','District: '+dist+' • TX: '+tx,'success');document.getElementById('mapList').innerHTML+=`<div style="padding:10px 0;border-bottom:1px solid #1e2f4d"><b>${l} (${dist})</b><br>${d} • <span style="color:#22c55e">Verified</span></div>`;if(map&&districtCoords[dist]){let c=districtCoords[dist];L.marker(c).addTo(map).bindPopup(`<b>${dist}</b><br>${d}<br>TX: ${tx}`).openPopup();map.setView(c,10);}}
 function registerVol(){let n=document.getElementById('vName').value.trim();let ph=document.getElementById('vPhone').value.trim();let sk=document.getElementById('vSkill').value;let ar=document.getElementById('vArea').value;if(!n||!ph||!sk||!ar){showToast('Fill all fields','District selection required','error');return;}showToast('Registered for '+ar,'Welcome '+n+'!','success');}
-function submitNGO(){
- let name=document.getElementById('ngoName').value.trim();
- let id=document.getElementById('ngoId').value.trim();
- let email=document.getElementById('ngoEmail').value.trim();
- let phone=document.getElementById('ngoPhone').value.trim();
- let dist=document.getElementById('ngoDist').value;
- if(!name||!id||!email||!phone||!dist){showToast('Fill all required fields','NGO details mandatory','error');return;}
- let tx='0x'+Math.random().toString(16).substr(2,8).toUpperCase();
- showToast('NGO Submitted: '+name,'District: '+dist+' • TX: '+tx+' • Verification in 24h','success');
-}
-function useNamakkal(){
- document.getElementById('loc').value='Namakkal, Tamil Nadu, India';
- document.getElementById('district').value='Namakkal';
- document.getElementById('locStatus').innerText='✓ Location set to Namakkal, Tamil Nadu (manual)';
- showToast('Location set to Namakkal','District auto-selected','success');
-}
+function submitNGO(){let name=document.getElementById('ngoName').value.trim();let id=document.getElementById('ngoId').value.trim();let email=document.getElementById('ngoEmail').value.trim();let phone=document.getElementById('ngoPhone').value.trim();let dist=document.getElementById('ngoDist').value;if(!name||!id||!email||!phone||!dist){showToast('Fill all required fields','NGO details mandatory','error');return;}let tx='0x'+Math.random().toString(16).substr(2,8).toUpperCase();showToast('NGO Submitted: '+name,'District: '+dist+' • TX: '+tx+' • Verification in 24h','success');}
+function useNamakkal(){document.getElementById('loc').value='Namakkal, Tamil Nadu, India';document.getElementById('district').value='Namakkal';document.getElementById('locStatus').innerText='✓ Location set to Namakkal, Tamil Nadu (manual)';showToast('Location set to Namakkal','District auto-selected','success');}
 function detectLocation(){
- let input=document.getElementById('loc');
- let status=document.getElementById('locStatus');
- input.value='Detecting EXACT location...';
- status.innerText='High accuracy GPS ON... Please allow permission - Open area la iru';
- if(!navigator.geolocation){
-   input.value='Namakkal, Tamil Nadu';
-   status.innerText='GPS not supported - using Namakkal as default';
-   document.getElementById('district').value='Namakkal';
-   return;
- }
+ let input=document.getElementById('loc');let status=document.getElementById('locStatus');
+ input.value='Detecting EXACT location...';status.innerText='High accuracy GPS ON... Please allow permission';
+ if(!navigator.geolocation){input.value='Namakkal, Tamil Nadu';status.innerText='GPS not supported - using Namakkal';document.getElementById('district').value='Namakkal';return;}
  navigator.geolocation.getCurrentPosition(async pos=>{
    const lat=pos.coords.latitude,lng=pos.coords.longitude,acc=pos.coords.accuracy;
-   status.innerText=`✓ GPS: ${lat.toFixed(6)}, ${lng.toFixed(6)} - Accuracy: ${acc.toFixed(0)}m - Fetching address...`;
-   try{
-     const res=await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&zoom=10`);
-     const data=await res.json();
-     if(data && data.display_name){
-       input.value=data.display_name;
-       status.innerText=`✓ EXACT: ${data.display_name.substring(0,80)} | Accuracy: ${acc.toFixed(0)}m | ${lat.toFixed(6)},${lng.toFixed(6)}`;
-       for(let d in districtCoords){if(data.display_name.toLowerCase().includes(d.toLowerCase())){document.getElementById('district').value=d;break;}}
-       showToast(`Exact Location! ${acc.toFixed(0)}m accuracy`,data.display_name.split(',').slice(0,3).join(','),'success');
-       if(map){map.setView([lat,lng],16); if(window.userMarker) map.removeLayer(window.userMarker); if(window.accCircle) map.removeLayer(window.accCircle); window.accCircle=L.circle([lat,lng],{radius:acc,color:'#38bdf8',fillOpacity:0.15}).addTo(map); window.userMarker=L.marker([lat,lng]).addTo(map).bindPopup(`<b>Your EXACT Location</b><br>${acc.toFixed(0)}m accuracy<br>${lat.toFixed(6)}, ${lng.toFixed(6)}`).openPopup();}
-     } else {
-       input.value=lat.toFixed(6)+', '+lng.toFixed(6);
-       status.innerText=`Coordinates: ${lat.toFixed(6)},${lng.toFixed(6)} - Accuracy ${acc.toFixed(0)}m`;
-     }
-   }catch(e){
-     input.value=lat.toFixed(6)+', '+lng.toFixed(6);
-     status.innerText=`Exact Coords: ${lat.toFixed(6)},${lng.toFixed(6)} - ${acc.toFixed(0)}m accuracy`;
-     showToast(`Exact Location: ${acc.toFixed(0)}m`,`${lat.toFixed(6)}, ${lng.toFixed(6)}`,'success');
-   }
- }, err=>{
-   input.value='';
-   input.placeholder='Type manually: Eg: Namakkal, Tamil Nadu';
-   status.innerText='GPS failed: '+err.message+'. Open sky la try pannu or Use Namakkal';
-   showToast('GPS detection failed','Allow permission & open area la iru','error');
- }, {enableHighAccuracy:true, timeout:15000, maximumAge:0});
+   status.innerText=`GPS: ${lat.toFixed(6)}, ${lng.toFixed(6)} - Accuracy: ${acc.toFixed(0)}m - Fetching address...`;
+   try{const res=await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&zoom=10`);const data=await res.json();if(data&&data.display_name){input.value=data.display_name;status.innerText=`✓ EXACT: ${data.display_name.substring(0,80)} | Accuracy: ${acc.toFixed(0)}m`;for(let d in districtCoords){if(data.display_name.toLowerCase().includes(d.toLowerCase())){document.getElementById('district').value=d;break;}}showToast(`Exact Location! ${acc.toFixed(0)}m accuracy`,data.display_name.split(',').slice(0,3).join(','),'success');if(map){map.setView([lat,lng],16);if(window.userMarker)map.removeLayer(window.userMarker);if(window.accCircle)map.removeLayer(window.accCircle);window.accCircle=L.circle([lat,lng],{radius:acc,color:'#38bdf8',fillOpacity:0.15}).addTo(map);window.userMarker=L.marker([lat,lng]).addTo(map).bindPopup(`<b>Your EXACT Location</b><br>${acc.toFixed(0)}m accuracy<br>${lat.toFixed(6)}, ${lng.toFixed(6)}`).openPopup();}}else{input.value=lat.toFixed(6)+', '+lng.toFixed(6);status.innerText=`Coordinates: ${lat.toFixed(6)},${lng.toFixed(6)} - Accuracy ${acc.toFixed(0)}m`;}}catch(e){input.value=lat.toFixed(6)+', '+lng.toFixed(6);status.innerText=`Exact Coords: ${lat.toFixed(6)},${lng.toFixed(6)} - ${acc.toFixed(0)}m accuracy`;showToast(`Exact Location: ${acc.toFixed(0)}m`,`${lat.toFixed(6)}, ${lng.toFixed(6)}`,'success');}
+ }, err=>{input.value='';input.placeholder='Type manually: Eg: Namakkal, Tamil Nadu';status.innerText='GPS failed: '+err.message+'. Type manually or click Use Namakkal button';showToast('GPS detection failed','Please type location manually','error');},{enableHighAccuracy:true,timeout:15000,maximumAge:0});
 }
-function initMap(){
- if(map){map.invalidateSize();return;}
- map=L.map('map').setView([11.12,78.65],7.2);
- L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
- // 38 DISTRICTS + ALERT CIRCLES
- for(let dist in districtCoords){
-   let c=districtCoords[dist];
-   let isAlert=['Chennai','Cuddalore','Nagapattinam','Mayiladuthurai'].includes(dist);
-   let color=isAlert?'#ef4444':'#3b82f6';
-   L.circleMarker(c,{radius:isAlert?9:7,color:color,fillColor:color,fillOpacity:0.9,weight:2}).addTo(map).bindPopup(`<b>${dist}</b><br>${isAlert?'<span style="color:#ef4444">🔴 HIGH ALERT</span>':'<span style="color:#3b82f6">Normal</span>'}<br><a href='https://timesofindia.indiatimes.com/topic/${dist.toLowerCase()}-floods' target='_blank'>View News</a>`);
- }
- // BIG ALERT CIRCLES ON MAP
- const alertZones=[
-  {dist:'Chennai',coords:[13.08,80.27],color:'#ef4444',radius:20000},
-  {dist:'Cuddalore',coords:[11.74,79.77],color:'#ef4444',radius:18000},
-  {dist:'Nagapattinam',coords:[10.76,79.84],color:'#f97316',radius:15000},
-  {dist:'Mayiladuthurai',coords:[11.10,79.65],color:'#f97316',radius:12000}
- ];
- alertZones.forEach(a=>{
-  L.circle(a.coords,{radius:a.radius,color:a.color,fillColor:a.color,fillOpacity:0.18,weight:2,dashArray:'8,8'}).addTo(map).bindPopup(`<b>🔴 ${a.dist} ALERT ZONE</b><br>500+ affected<br>Priority: HIGH`);
- });
-}
+function initMap(){if(map){map.invalidateSize();return;}map=L.map('map').setView([11.12,78.65],7.2);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);for(let dist in districtCoords){let c=districtCoords[dist];let isAlert=['Chennai','Cuddalore','Nagapattinam','Mayiladuthurai'].includes(dist);let color=isAlert?'#ef4444':'#3b82f6';L.circleMarker(c,{radius:isAlert?9:7,color:color,fillColor:color,fillOpacity:0.8}).addTo(map).bindPopup(`<b>${dist}</b><br>${isAlert?'<span style="color:#ef4444">🔴 HIGH ALERT</span>':'Normal'}<br><a href='https://timesofindia.indiatimes.com/topic/${dist.toLowerCase()}-floods' target='_blank'>View News</a>`);}const alertZones=[{dist:'Chennai',coords:[13.08,80.27],color:'#ef4444',radius:20000},{dist:'Cuddalore',coords:[11.74,79.77],color:'#ef4444',radius:18000},{dist:'Nagapattinam',coords:[10.76,79.84],color:'#f97316',radius:15000},{dist:'Mayiladuthurai',coords:[11.10,79.65],color:'#f97316',radius:12000}];alertZones.forEach(a=>{L.circle(a.coords,{radius:a.radius,color:a.color,fillColor:a.color,fillOpacity:0.18,weight:2,dashArray:'8,8'}).addTo(map).bindPopup(`<b>🔴 ${a.dist} ALERT ZONE</b><br>500+ affected`);});}
 function loadNews(){
- const items=[
-  {t:"🔴 Heavy Rain Alert: Chennai, Cuddalore, Nagapattinam - IMD Red Alert",src:"TOI",link:"https://timesofindia.indiatimes.com/topic/tamil-nadu-floods"},
-  {t:"🟠 Cuddalore: 200 houses flooded - Rescue teams deployed",src:"The Hindu",link:"https://www.thehindu.com/news/national/tamil-nadu/"},
-  {t:"🟢 TN Govt ₹10 Cr Thoothukudi relief - Blockchain verified",src:"NIE",link:"https://www.newindianexpress.com/states/tamil-nadu"},
-  {t:"🔴 Cauvery overflows Trichy - 5 villages evacuated",src:"NDTV",link:"https://www.ndtv.com/tamil-nadu-news"}
- ];
+ const items=[{t:"🔴 Heavy Rain Alert: Chennai, Cuddalore, Nagapattinam - IMD Red Alert",src:"TOI",link:"https://timesofindia.indiatimes.com/topic/tamil-nadu-floods"},{t:"🟠 Cuddalore: 200 houses flooded - Rescue teams deployed",src:"The Hindu",link:"https://www.thehindu.com/news/national/tamil-nadu/"},{t:"🟢 TN Govt ₹10 Cr Thoothukudi relief - Blockchain verified",src:"NIE",link:"https://www.newindianexpress.com/states/tamil-nadu"},{t:"🔴 Cauvery overflows Trichy - 5 villages evacuated",src:"NDTV",link:"https://www.ndtv.com/tamil-nadu-news"}];
  let html='';items.forEach(i=>{html+=`<div class="newsItem" onclick="window.open('${i.link}','_blank')"><b style="font-size:13px">${i.t}</b><div style="font-size:11px;color:var(--muted);margin-top:6px">${i.src} • Click →</div></div>`;});
  document.getElementById('liveNews').innerHTML=html;
  let tickerHtml='';for(let k=0;k<3;k++){items.forEach(i=>{tickerHtml+=` ${i.t} - <a href="${i.link}" target="_blank">${i.src}</a> • `;});}
